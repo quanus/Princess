@@ -2,7 +2,6 @@
 var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -10,7 +9,6 @@ var Enemy = function(x, y, speed) {
     this.y = y || 0; //need to be change
     this.speed = speed || 100; //
 };
-
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -19,9 +17,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x += this.speed * dt; //
     this.repeat() //make more bugs
-
 };
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -31,7 +27,6 @@ Enemy.prototype.repeat = function() {
         this.x = -100
     }
 }
-
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -49,11 +44,17 @@ Player.prototype.render = function() {
 Player.prototype.update = function() {
     //change with movement
 }
+Player.prototype.reset = function() {
+    this.x = 200;
+    this.y = 403;
+}
+
 Player.prototype.handleInput = function(key) {
     // 
     var backHome = function() {
         if (player.y <= 20) {
-            alert("小火炉回家吃饭了")
+            player = new Player;
+            alert("小火炉回家吃饭了");
         }
     }
     switch (key) {
@@ -64,14 +65,12 @@ Player.prototype.handleInput = function(key) {
             backHome();
             break;
         case 'right':
-
             if (this.x < 400) {
                 this.x += 100
             };
             backHome();
             break;
         case 'up':
-
             if (this.y > 0) {
                 this.y -= 85
             };
@@ -83,19 +82,13 @@ Player.prototype.handleInput = function(key) {
             };
             backHome();
             break;
-
     }
-
 }
-
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [new Enemy(0, 60), new Enemy(0, 145, 60), new Enemy(0, 230, 60)];
+var allEnemies = [new Enemy(-200, 60, 500), new Enemy(-100, 60, 300), new Enemy(0, 60, 220), new Enemy(-100, 145, 300), new Enemy(200, 145, 300), new Enemy(100, 145, 300), new Enemy(400, 145, 400), new Enemy(200, 230, 300), new Enemy(300, 230, 300)];
 var player = new Player();
-
-
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
@@ -105,18 +98,13 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
-
 });
-
-
-
-
-// var ev = new KeyboardEvent('keypress', {
-//     keyCode: 37
-// });
-// document.dispatchEvent(ev);
-// function simulateKeyPress(character) {
-//   jQuery.event.trigger({ type : 'keypress', which : character.charCodeAt(0) });
-// }
+//check 
+function checkCollisions() {
+    allEnemies.forEach(function(enemy) {
+        if (Math.abs(enemy.x - player.x) < 25 && Math.abs(enemy.y - player.y) < 25) {
+            player.reset();
+        }
+    })
+}
