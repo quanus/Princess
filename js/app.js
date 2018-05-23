@@ -51,19 +51,37 @@ Player.prototype.update = function() {
 }
 Player.prototype.handleInput = function(key) {
     // 
-
+    var backHome = function() {
+        if (player.y <= 20) {
+            alert("小火炉回家吃饭了")
+        }
+    }
     switch (key) {
         case 'left':
-            if (this.x > 0) { this.x -= 100 };
+            if (this.x > 0) {
+                this.x -= 100
+            };
+            backHome();
             break;
         case 'right':
-            if (this.x < 400) { this.x += 100 };
+
+            if (this.x < 400) {
+                this.x += 100
+            };
+            backHome();
             break;
         case 'up':
-            if (this.y > 0) { this.y -= 85 };
+
+            if (this.y > 0) {
+                this.y -= 85
+            };
+            backHome();
             break;
         case 'down':
-            if (this.y < 403) { this.y += 85 };
+            if (this.y < 403) {
+                this.y += 85
+            };
+            backHome();
             break;
 
     }
@@ -89,5 +107,16 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
-    if (player.y <= 20) { alert("小火炉回家吃饭了") };
+
 });
+
+
+
+
+// var ev = new KeyboardEvent('keypress', {
+//     keyCode: 37
+// });
+// document.dispatchEvent(ev);
+// function simulateKeyPress(character) {
+//   jQuery.event.trigger({ type : 'keypress', which : character.charCodeAt(0) });
+// }
