@@ -96,6 +96,9 @@ var Engine = (function(global) {
         player.update();
     }
 
+    function reset() {
+        player.reset();
+    }
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
